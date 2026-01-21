@@ -87,3 +87,15 @@ This project strengthened my understanding of:
 
 **Sudarshan Gupta**  
 GitHub: https://github.com/Sudarshan28
+
+##ScreenShots
+## Customers & Accounts Table
+<img width="1440" height="900" alt="Screenshot 2026-01-21 at 3 19 13 PM" src="https://github.com/user-attachments/assets/7e90f5e7-a75c-4187-9666-4a6ae06d240a" />
+
+## Transactions & Query Results
+<img width="1440" height="900" alt="Screenshot 2026-01-21 at 3 19 59 PM" src="https://github.com/user-attachments/assets/d17fa389-14eb-42f6-b6d5-62c1a91abbe0" />
+
+## Balance Summary Report
+<img width="1440" height="900" alt="Screenshot 2026-01-21 at 3 56 04 PM" src="https://github.com/user-attachments/assets/a02afa72-3077-431a-bd55-4ae36d78a93f" />
+
+
