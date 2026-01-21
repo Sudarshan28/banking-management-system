@@ -1,0 +1,80 @@
+-- ===============================
+-- Banking Management System
+-- ===============================
+
+DROP DATABASE IF EXISTS banking_db;
+CREATE DATABASE banking_db;
+USE banking_db;
+
+-- ===============================
+-- Customers Table
+-- ===============================
+CREATE TABLE Customers (
+    customer_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phone VARCHAR(15) NOT NULL
+);
+
+-- ===============================
+-- Accounts Table
+-- ===============================
+CREATE TABLE Accounts (
+    account_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT NOT NULL,
+    account_type VARCHAR(20) NOT NULL,
+    balance DECIMAL(10,2) CHECK (balance >= 0),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
+);
+
+CREATE INDEX idx_customer_id ON Accounts(customer_id);
+
+-- ===============================
+-- Transactions Table
+-- ===============================
+CREATE TABLE Transactions (
+    transaction_id INT AUTO_INCREMENT PRIMARY KEY,
+    account_id INT NOT NULL,
+    transaction_type ENUM('Deposit', 'Withdrawal') NOT NULL,
+    amount DECIMAL(10,2) CHECK (amount > 0),
+    transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (account_id) REFERENCES Accounts(account_id)
+);
+
+-- ===============================
+-- Sample Data
+-- ===============================
+INSERT INTO Customers (name, email, phone) VALUES
+('Amit Sharma', 'amit@gmail.com', '9876543210'),
+('Neha Verma', 'neha@gmail.com', '9123456789');
+
+INSERT INTO Accounts (customer_id, account_type, balance) VALUES
+(1, 'Savings', 5000.00),
+(2, 'Current', 10000.00);
+
+INSERT INTO Transactions (account_id, transaction_type, amount) VALUES
+(1, 'Deposit', 2000.00),
+(1, 'Withdrawal', 1000.00),
+(2, 'Deposit', 5000.00);
+
+-- ===============================
+-- Useful Queries (Recruiter Gold)
+-- ===============================
+
+-- View all customers with account details
+SELECT c.name, a.account_type, a.balance
+FROM Customers c
+JOIN Accounts a ON c.customer_id = a.customer_id;
+
+-- Transaction history for each account
+SELECT a.account_id, t.transaction_type, t.amount, t.transaction_date
+FROM Accounts a
+JOIN Transactions t ON a.account_id = t.account_id
+ORDER BY t.transaction_date DESC;
+
+-- Total balance per customer
+SELECT c.name, SUM(a.balance) AS total_balance
+FROM Customers c
+JOIN Accounts a ON c.customer_id = a.customer_id
+GROUP BY c.name;
